@@ -1,0 +1,42 @@
+/*
+ * Created by SharpDevelop.
+ * User: Valentin
+ * Date: 21/10/2025
+ * Time: 18:09
+ * 
+ * To change this template use Tools | Options | Coding | Edit Standard Headers.
+ */
+using System;
+
+namespace Proyecto_POO
+{
+	/// <summary>
+	/// Description of Cuenta.
+	/// </summary>
+	public class Cuenta
+	{
+		private string numero;
+		private string apellido;
+		private string dni;
+		private double saldo;
+		
+		public Cuenta(string numero, string apellido, string dni, double saldo)
+		{
+			this.numero = numero;
+			this.apellido = apellido;
+			this.dni = dni;
+			this.saldo = saldo;
+		}
+		
+		public void DepositarSaldo(double P){
+			saldo += P;
+			Console.WriteLine("Deposito exitoso");
+		}
+		
+		public void ExtraerSaldo(double P){
+			saldo -= P;
+			Console.WriteLine("Extracción exitosa");
+		}
+		
+	}
+}
