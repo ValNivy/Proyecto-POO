@@ -1,0 +1,80 @@
+/*
+ * Created by SharpDevelop.
+ * User: Valentin
+ * Date: 21/10/2025
+ * Time: 18:08
+ * 
+ * To change this template use Tools | Options | Coding | Edit Standard Headers.
+ */
+using System;
+using System.Collections.Generic;
+
+namespace Proyecto_POO
+{
+	/// <summary>
+	/// Description of Banco.
+	/// </summary>
+	public class Banco
+	{
+		private string nombre;
+		private List<Cuenta> ListaCuentas;
+		private List<Cliente> ListaClientes;
+		
+		public Banco(string nombre)
+		{
+			this.nombre = nombre;
+			this.ListaCuentas = new List<Cuenta>();
+			this.ListaClientes = new List<Cliente>();
+		}
+		
+		public List<Cuenta> listaCuentas
+		{
+			get {return ListaCuentas;}
+		}
+			
+		public List<Cliente> listaClientes
+		{
+			get {return ListaClientes;}
+		}
+		
+		public void AgregarCuenta(Cuenta P){
+			ListaCuentas.Add(P);
+		}
+		
+		public void AgregarCliente(Cliente P){
+			ListaClientes.Add(P);
+		}
+		
+		public void EliminarCuenta(Cuenta R){
+			ListaCuentas.Remove(R);
+		}
+		
+		public void EliminarCliente(Cliente R){
+			ListaClientes.Remove(R);
+		}
+		
+		public int CantidadCuenta(){
+			return ListaCuentas.Count;
+		}
+		
+		public int CantidadClientes(){
+			return ListaClientes.Count;
+		}
+		
+		public Cuenta VerCuentas(int i){
+			return ListaCuentas[i];                    
+		}
+		
+		public Cliente VerCliente(int i){
+			return ListaClientes[i];
+		}
+		public bool ExisteCuenta(Cuenta D){
+			return ListaCuentas.Contains(D);
+		}
+		
+		public bool ExisteCliente(Cliente D){
+			return ListaClientes.Contains(D);
+		}
+		
+	}
+}
