@@ -1,0 +1,40 @@
+/*
+ * Created by SharpDevelop.
+ * User: Valentin
+ * Date: 21/10/2025
+ * Time: 18:08
+ * 
+ * To change this template use Tools | Options | Coding | Edit Standard Headers.
+ */
+using System;
+
+namespace Proyecto_POO
+{
+	/// <summary>
+	/// Description of Cliente.
+	/// </summary>
+	public class Cliente
+	{
+		private string nombre;
+		private string apellido;
+		private string direccion;
+		private string telefono;
+		private string email;
+		private string dni;
+		
+		public Cliente(string nombre, string apellido, string direccion, string telefono, string email, string dni)
+		{
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.direccion = direccion;
+		this.telefono = telefono;
+		this.email = email;
+		this.dni = dni;
+		}
+		
+		public void MostrarDatos(){
+			Console.WriteLine("Nombre:{0}\n Apellido:{1}\n Dirección:{2}\n Telefono:{3}\n Email:{4}\n DNI:{5}", nombre, apellido, direccion, telefono, email, dni);
+		}
+		
+	}
+}
