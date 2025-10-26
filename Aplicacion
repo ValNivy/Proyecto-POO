@@ -12,14 +12,75 @@ namespace Proyecto_POO
 {
 	class Program
 	{
+		public static void CuentaNueva(Banco c1, Cuenta p1){
+			Console.WriteLine("Ingrese su numero:");
+			p1.Numero = Console.ReadLine();
+			Console.WriteLine("Ingrese su apellido");
+			p1.Apellido = Console.ReadLine();
+			Console.WriteLine("Ingrese su DNI:");
+			p1.Dni = Console.ReadLine();
+			if (c1.ExisteCuenta(p1) == false){
+				Console.WriteLine("No tiene una cuenta, debe crearse una cuenta nueva");
+				ClienteNuevo();
+			}
+			Console.WriteLine("Ingrese su saldo");
+			p1.Saldo = double.Parse(Console.ReadLine());
+			c1.AgregarCuenta(p1);
+			Console.WriteLine("¡Cuenta agregada con exito!");
+		}
+		
+		public static void EliminarCuentaStatic(Banco c1, Cuenta p1){
+			Console.WriteLine("Ingrese su numero de cuenta");
+			p1.Numero = Console.ReadLine();
+			if (c1.ExisteCuenta(p1) == true){
+				c1.EliminarCuenta(p1);
+				Console.WriteLine("Cuenta eliminada");
+			}
+			else{
+				Console.WriteLine("La cuenta no existe o el cliente no tiene más cuentas");
+				EliminarClienteStatic();
+			}
+		}
+		
+		public static void EliminarClienteStatic(){
+			
+		}
+			
+		public static void ClienteNuevo(){
+		 	string	nombre, apellido, direccion, telefono, email, dni;
+		 	
+			
+		}
+		
+		public static void ListarClientes(Banco c1, Cuenta p1, int indice){
+			if (c1.ExisteCuenta(p1) == true){
+				indice++;
+			}
+			if (indice >= 1){
+			Console.WriteLine(c1.VerCliente(indice));
+			}
+		}
+		
 		public static void Main(string[] args)
 		{
-			Console.WriteLine("Hello World!");
-			
-			// TODO: Implement Functionality Here
-			
-			Console.Write("Press any key to continue . . . ");
+			/*Listado de clientes que tienen más de una cuenta , indicando nro
+de cuenta y saldo de cada una.*/
+			string opcion;
+			int indice = 0;
+			Banco c1 = new Banco("Banco de los programadores");
+			Cuenta p1 = new Cuenta("","","",0);
+			Cliente d1 = new Cliente("","","","","","");
+			do
+			{
+			Console.WriteLine("¿Qué desea hacer?\n a)Agregar una cuenta\nb)Eliminar una cuenta\nc)Lista de clientes con más de una cuenta");
+			opcion = Console.ReadLine();
+			switch (opcion){
+					case "a": CuentaNueva(c1, p1);break;
+					case "b": EliminarCuentaStatic(c1, p1);break;
+					case "c": ListarClientes(c1, p1, indice);break;
+			}
 			Console.ReadKey(true);
+			}while(opcion != "f");
 		}
 	}
 }
