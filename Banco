@@ -68,7 +68,7 @@ namespace Proyecto_POO
 		public Cliente VerCliente(int i){
 			return ListaClientes[i];
 		}
-		public bool ExisteCuenta(Cuenta D){
+		public bool ExisteCuenta(Cuenta D){ 
 			return ListaCuentas.Contains(D);
 		}
 		
