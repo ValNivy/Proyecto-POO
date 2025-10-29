@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Collections.Generic;
 
 namespace Proyecto_POO
 {
@@ -59,5 +60,10 @@ namespace Proyecto_POO
 			Console.WriteLine("Extracción exitosa");
 		}
 		
+		public int ContarCuentas(int i){
+			i++;
+			return i;
+		}
+		//hacer metodo para contar cantidad de cuentas
 	}
 }
