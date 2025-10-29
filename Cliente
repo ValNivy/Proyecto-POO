@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Collections.Generic;
 
 namespace Proyecto_POO
 {
@@ -21,6 +22,36 @@ namespace Proyecto_POO
 		private string telefono;
 		private string email;
 		private string dni;
+		
+		public string NombreC{
+			get{return NombreC;}
+			set{nombre = value;}
+		}
+		
+		public string ApellidoC{
+			get{return ApellidoC;}
+			set{apellido = value;}
+		}
+		
+		public string Direcccion{
+			get{return direccion;}
+			set{direccion = value;}
+		}
+		
+		public string Telefono{
+			get{return Telefono;}
+			set{telefono = value;}
+		}
+		
+		public string Email{
+			get{return Email;}
+			set{email = value;}
+		}
+		
+		public string Dni{
+			get{return Dni;}
+			set{dni = value;}
+		}
 		
 		public Cliente(string nombre, string apellido, string direccion, string telefono, string email, string dni)
 		{
