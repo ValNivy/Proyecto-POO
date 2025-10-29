@@ -12,16 +12,17 @@ namespace Proyecto_POO
 {
 	class Program
 	{
-		public static void CuentaNueva(Banco c1, Cuenta p1){
+		public static void CuentaNueva(Banco c1, Cuenta p1, Cliente d1){
 			Console.WriteLine("Ingrese su numero:");
 			p1.Numero = Console.ReadLine();
 			Console.WriteLine("Ingrese su apellido");
 			p1.Apellido = Console.ReadLine();
 			Console.WriteLine("Ingrese su DNI:");
 			p1.Dni = Console.ReadLine();
+			foreach
 			if (c1.ExisteCuenta(p1) == false){
-				Console.WriteLine("No tiene una cuenta, debe crearse una cuenta nueva");
-				ClienteNuevo();
+				Console.WriteLine("No tiene una cuenta, debe crearse un cliente nuevo.");
+				ClienteNuevo(c1, d1);
 			}
 			Console.WriteLine("Ingrese su saldo");
 			p1.Saldo = double.Parse(Console.ReadLine());
@@ -46,18 +47,27 @@ namespace Proyecto_POO
 			
 		}
 			
-		public static void ClienteNuevo(){
-		 	string	nombre, apellido, direccion, telefono, email, dni;
-		 	
-			
+		public static void ClienteNuevo(Banco c1, Cliente d1){
+		 	Console.WriteLine("Ingrese su nombre:");
+			d1.NombreC = Console.ReadLine();
+			Console.WriteLine("Ingrese su apellido");
+			d1.ApellidoC = Console.ReadLine();
+			Console.WriteLine("Ingrese su DNI:");
+			d1.Dni = Console.ReadLine();
+			Console.WriteLine("Ingrese su dirección:");
+			d1.Direcccion = Console.ReadLine();
+			Console.WriteLine("Ingrese su telefono:");
+			d1.Telefono = Console.ReadLine();
+			Console.WriteLine("Ingrese su email:");
+			d1.Email = Console.ReadLine();
+			Console.WriteLine("¡Cliente agregado con éxito!");
 		}
 		
 		public static void ListarClientes(Banco c1, Cuenta p1, int indice){
-			if (c1.ExisteCuenta(p1) == true){
-				indice++;
-			}
-			if (indice >= 1){
-			Console.WriteLine(c1.VerCliente(indice));
+			foreach (Cliente c in listaClientes){
+				if (ContarCuentas(i) == p1.Dni){
+					
+				}
 			}
 		}
 		
@@ -75,12 +85,10 @@ de cuenta y saldo de cada una.*/
 			Console.WriteLine("¿Qué desea hacer?\n a)Agregar una cuenta\nb)Eliminar una cuenta\nc)Lista de clientes con más de una cuenta");
 			opcion = Console.ReadLine();
 			switch (opcion){
-					case "a": CuentaNueva(c1, p1);break;
+					case "a": CuentaNueva(c1, p1, d1);break;
 					case "b": EliminarCuentaStatic(c1, p1);break;
 					case "c": ListarClientes(c1, p1, indice);break;
-			}
-			Console.ReadKey(true);
-			}while(opcion != "f");
+			}}while(opcion != "f");
 		}
 	}
 }
