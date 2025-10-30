@@ -59,7 +59,7 @@ namespace Proyecto_POO
 			Console.WriteLine("Ingrese su nombre:");
 			d.NombreC = Console.ReadLine();
 			Console.WriteLine("Ingrese su apellido");
-			d.ApellidoC = Console.ReadLine());
+			d.ApellidoC = Console.ReadLine();
 			Console.WriteLine("Ingrese su DNI:");
 			d.Dni = Console.ReadLine();
 			Console.WriteLine("Ingrese su dirección:");
@@ -132,10 +132,9 @@ namespace Proyecto_POO
 							Console.WriteLine("N° Cuenta: {0}, Saldo: ${1}", d.Numero, d.Saldo);
 						}
 					}
-					
-					else{
+				}
+				else{
 						Console.WriteLine("No hay clientes con multiples cuentas");
-					}
 				}
 			}
 		}
