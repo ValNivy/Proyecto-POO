@@ -64,7 +64,6 @@ namespace Proyecto_POO
 		public Cuenta VerCuentas(int i){
 			return ListaCuentas[i];                    
 		}
-		
 		public Cliente VerCliente(int i){
 			return ListaClientes[i];
 		}
