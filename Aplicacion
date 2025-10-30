@@ -13,11 +13,165 @@ namespace Proyecto_POO
 {
 	class Program
 	{
+		public static void CuentaNueva(Banco c, Cuenta p, Cliente d)
+		{
+			bool NumeroInvalido = false;
+			while(!NumeroInvalido){
+			try{
+			Console.WriteLine("Ingrese su numero:");
+			p.Numero = Console.ReadLine();
+			ValidarNumero(p.Numero, c);
+			NumeroInvalido = true;
+			}
+			catch (NumeroIgualExcepction ex){
+				Console.WriteLine("Ese numero de cuenta ya existe, intente nuevamente\n");
+				}
+			}
+			Console.WriteLine("Ingrese su apellido");
+			p.Apellido = Console.ReadLine();
+			Console.WriteLine("Ingrese su DNI:");
+			p.Dni = Console.ReadLine();
+			
+			if (c.ExisteCuenta(p) == false){
+				Console.WriteLine("No tiene una cuenta, debe crearse un perfil de cliente nuevo.");
+				NuevoCliente(c, d);
+			}
+			
+			Console.WriteLine("Ingrese su saldo: ");
+			p.Saldo = double.Parse(Console.ReadLine());
+			c.AgregarCuenta(p);
+			Console.WriteLine("¡Cuenta agregada con exito!");
+		}
+		
+		static void ValidarNumero(string p, Banco c)
+		{
+				foreach(Cuenta d in c.listaCuentas)
+				{
+					if(p == d.Numero)
+					{
+						throw new NumeroIgualExcepction();
+					}
+				}
+			}
+		
+		public static void NuevoCliente(Banco c, Cliente d)
+		{
+			Console.WriteLine("Ingrese su nombre:");
+			d.NombreC = Console.ReadLine();
+			Console.WriteLine("Ingrese su apellido");
+			d.ApellidoC = Console.ReadLine());
+			Console.WriteLine("Ingrese su DNI:");
+			d.Dni = Console.ReadLine();
+			Console.WriteLine("Ingrese su dirección:");
+			d.Direcccion = Console.ReadLine();
+			Console.WriteLine("Ingrese su telefono:");
+			d.Telefono = Console.ReadLine();
+			Console.WriteLine("Ingrese su email:");
+			d.Email = Console.ReadLine();
+			c.AgregarCliente(d);
+			Console.WriteLine("¡Cliente agregado con éxito!");
+		}
+		
+		public static void EliminarCuenta(Banco c, Cuenta p, Cliente d)
+		{
+			Console.WriteLine("Ingrese su numero de cuenta: ");
+			p.Numero = Console.ReadLine();
+			if (c.ExisteCuenta(p) == true)
+			{
+				c.EliminarCuentas(p);
+				Console.WriteLine("Cuenta eliminada.");
+			}
+			else
+			{
+				Console.WriteLine("La cuenta no existe o el cliente no tiene más cuentas.");
+				c.EliminarClientes(d);
+			}
+		}
+		
+		public static void EliminarCliente(Banco c, Cliente d)
+		{
+			Console.WriteLine("Ingrese su Dni (unico de cada Cliente): ");
+			d.Dni = Console.ReadLine();
+			if (c.ExisteCliente(d) == true)
+			{
+				c.EliminarClientes(d);
+				Console.WriteLine("Cliente eliminado.");
+			}
+			else
+			{
+				Console.WriteLine("El Cliente no existe.");
+				return;
+			}
+		}
+		
+		
+		public static void ListarClientes(Banco c)
+		{
+			Console.WriteLine("Clientes con mas de una cuenta: \n");
+			foreach(Cliente e in c.listaClientes)
+			{
+				int cantidad = 0;
+				
+				foreach(Cuenta d in c.listaCuentas)
+				{
+					if(e.Dni == d.Dni)
+					{
+						cantidad++;
+					}
+				}
+				
+				if (cantidad > 1)
+				{
+					
+					Console.WriteLine("Apellido: {0}, Dni: {1}, Cantidad de cuentas: {2}", e.ApellidoC, e.Dni, cantidad);
+					
+					foreach (Cuenta d in c.listaCuentas)
+					{
+						if (e.Dni == d.Dni)
+						{
+							Console.WriteLine("N° Cuenta: {0}, Saldo: ${1}", d.Numero, d.Saldo);
+						}
+					}
+					
+					else{
+						Console.WriteLine("No hay clientes con multiples cuentas");
+					}
+				}
+			}
+		}
+				
+				
+				public static void ListadoCuentas(Banco c)
+				{
+					if (c.CantidadCuentas() == 0)
+					{
+						Console.WriteLine("No hay cuentas registrados en el banco.");
+						return;
+					}
+					foreach (Cuenta p in c.listaCuentas)
+					{
+						p.MostrarDatosP();
+					}
+				}
+				
+				//Listado de clientes
+				
+				public static void ListadoClientes(Banco c)
+				{
+					if (c.CantidadClientes() == 0)
+					{
+						Console.WriteLine("No hay clientes registrados en el banco.");
+						return;
+					}
+					foreach (Cliente d in c.listaClientes)
+					{
+						d.MostrarDatos();
+					}
+				}
+				
 		public static void Main(string[] args)
 		{
-			
 			string opcion;
-			
 			//invocamos variables generales para cada uno. Asi cumpliendo la composicion.
 			Banco c = new Banco("Banco de los Programadores");
 			Cliente d = new Cliente("","","","","","");
@@ -41,22 +195,10 @@ namespace Proyecto_POO
 			c.AgregarCliente(d4);
 			c.AgregarCuenta(p4);
 			
-			
-			
 			do
 			{
 				Console.WriteLine("Bienvendio al "  + c.Nombre);
-				Console.WriteLine("\n¿Qué desea hacer?" +
-				                  "\na) Agregar una Cuenta." +
-				                  "\nb) Eliminar una Cuenta." +
-				                  "\nc) Lista de Clientes con más de una Cuenta." +
-				                  "\nd) Realizar una Extracción." +
-				                  "\ne) Realizar un Deposito." +
-				                  "\nf) Transferir dinero entre Cuentas." +
-				                  "\ng) Listado de Cuentas." +
-				                  "\nh) Listado de Clientes." +
-				                  "\ni) Salir.");
-				
+				Console.WriteLine("\n¿Qué desea hacer?" + "\na) Agregar una Cuenta." + "\nb) Eliminar una Cuenta." + "\nc) Lista de Clientes con más de una Cuenta." + "\nd) Realizar una Extracción." + "\ne) Realizar un Deposito." + "\nf) Transferir dinero entre Cuentas." + "\ng) Listado de Cuentas." + "\nh) Listado de Clientes." + "\ni) Salir.");
 				opcion = Console.ReadLine().ToLower();
 				switch (opcion)
 				{
@@ -104,8 +246,7 @@ namespace Proyecto_POO
 						Console.ReadKey();
 						break;
 					default:
-						Console.WriteLine("Eleccion Invalida. La entrada debe ser entre a-i");
-						break;
+						Console.WriteLine("Eleccion Invalida. La entrada debe ser entre a-i");break;
 				}
 				
 				if (opcion != "i")
@@ -116,172 +257,10 @@ namespace Proyecto_POO
 				}
 			}
 			while(opcion != "i");
-			
-			Console.WriteLine("\n\nMuchas Gracias por confiar en nuestro servicio.");
-			Console.WriteLine("\nPresione cualquier tecla para cerrar...");
-			Console.ReadKey();
+					Console.WriteLine("\n\nMuchas Gracias por confiar en nuestro servicio.");
+					Console.WriteLine("\nPresione cualquier tecla para cerrar...");
+					Console.ReadKey();
 		}
-		
-		
-		//_____________________________________________________________________________________________________________________________________________________________________
-		
-
-		
-		public static void CuentaNueva(Banco c, Cuenta p, Cliente d)
-		{
-			Console.WriteLine("Ingrese su numero:");
-			p.Numero = Console.ReadLine();
-			Console.WriteLine("Ingrese su apellido");
-			p.Apellido = Console.ReadLine().ToLower();
-			Console.WriteLine("Ingrese su DNI:");
-			p.Dni = Console.ReadLine();
-			
-			if (c.ExisteCuenta(p) == false){
-				Console.WriteLine("No tiene una cuenta, debe crearse un perfil de cliente nuevo.");
-				NuevoCliente(c, d);
-			}
-			
-			Console.WriteLine("Ingrese su saldo: ");
-			p.Saldo = double.Parse(Console.ReadLine());
-			c.AgregarCuenta(p);
-			Console.WriteLine("¡Cuenta agregada con exito!");
-		}
-		
-		public static void NuevoCliente(Banco c, Cliente d)
-		{
-			Console.WriteLine("Ingrese su nombre:");
-			d.NombreC = Console.ReadLine().ToLower();
-			Console.WriteLine("Ingrese su apellido");
-			d.ApellidoC = Console.ReadLine().ToLower();
-			Console.WriteLine("Ingrese su DNI:");
-			d.Dni = Console.ReadLine();
-			Console.WriteLine("Ingrese su dirección:");
-			d.Direcccion = Console.ReadLine().ToLower();
-			Console.WriteLine("Ingrese su telefono:");
-			d.Telefono = Console.ReadLine().ToLower();
-			Console.WriteLine("Ingrese su email:");
-			d.Email = Console.ReadLine().ToLower();
-			c.AgregarCliente(d);
-			Console.WriteLine("¡Cliente agregado con éxito!");
-		}
-		
-		public static void EliminarCuenta(Banco c, Cuenta p, Cliente d)
-		{
-			Console.WriteLine("Ingrese su numero de cuenta: ");
-			p.Numero = Console.ReadLine();
-			if (c.ExisteCuenta(p) == true)
-			{
-				c.EliminarCuentas(p);
-				Console.WriteLine("Cuenta eliminada.");
-			}
-			else
-			{
-				Console.WriteLine("La cuenta no existe o el cliente no tiene más cuentas.");
-				c.EliminarClientes(d);
-			}
-		}
-		
-		public static void EliminarCliente(Banco c, Cliente d)
-		{
-			Console.WriteLine("Ingrese su Dni (unico de cada Cliente): ");
-			d.Dni = Console.ReadLine();
-			if (c.ExisteCliente(d) == true)
-			{
-				c.EliminarClientes(d);
-				Console.WriteLine("Cliente eliminado.");
-			}
-			else
-			{
-				Console.WriteLine("El Cliente no existe.");
-				return;
-			}
-		}
-		
-		
-		public static void ListarClientes(Banco c)
-		{
-			
-			Console.WriteLine("Estos son los clientes con mas de una cuenta: \n");
-			foreach(Cliente e in c.listaClientes)
-			{
-				int cantidad = 0;
-				
-				foreach(Cuenta d in c.listaCuentas)
-				{
-					if(e.Dni == d.Dni)
-					{
-						
-						cantidad++;
-					}
-				}
-				
-				if (cantidad > 1)
-				{
-					
-					Console.WriteLine("Apellido: {0}, Dni: {1}, Cantidad de cuentas: {2}", e.ApellidoC, e.Dni, cantidad);
-
-					// mostrar los datos de cada cuenta del cliente
-					foreach (Cuenta d in c.listaCuentas)
-					{
-						if (e.Dni == d.Dni)
-						{
-							Console.WriteLine(" ---> N° Cuenta: {0}, Saldo: ${1}", d.Numero, d.Saldo);
-						}
-					}
-					
-					if (cantidad < 2)
-					{
-						Console.WriteLine("No hay clientes con multiples cuentas");
-					}
-					
-					
-				}
-			}
-		}
-				
-				
-				//Realizar una extracción. En caso de no poseer saldo suficiente se
-				//debe levantar una excepción que indique lo sucedido (“Saldo insuficiente”)
-				
-				
-				
-				//Depositar dinero en una cuenta dada.
-				
-				
-				
-				//Transferir dinero entre dos cuentas. Validar existencia de saldo
-				//en la cuenta origen
-				
-				
-				
-				//Listado de cuentas
-				
-				public static void ListadoCuentas(Banco c)
-				{
-					if (c.CantidadCuentas() == 0)
-					{
-						Console.WriteLine("No hay cuentas registrados en el banco.");
-						return;
-					}
-					foreach (Cuenta p in c.listaCuentas)
-					{
-						p.MostrarDatosP();
-					}
-				}
-				
-				//Listado de clientes
-				
-				public static void ListadoClientes(Banco c)
-				{
-					if (c.CantidadClientes() == 0)
-					{
-						Console.WriteLine("No hay clientes registrados en el banco.");
-						return;
-					}
-					foreach (Cliente d in c.listaClientes)
-					{
-						d.MostrarDatos();
-					}
-				}
+	
 			}
 		}
