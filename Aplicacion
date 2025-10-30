@@ -145,6 +145,7 @@ namespace Proyecto_POO
 		public static void ListarClientes(Banco c)
 		{
 			Console.WriteLine("Clientes con mas de una cuenta: \n");
+			bool halloClientes = false;
 			foreach(Cliente e in c.listaClientes)
 			{
 				int cantidad = 0;
@@ -159,7 +160,7 @@ namespace Proyecto_POO
 				
 				if (cantidad > 1)
 				{
-					
+					halloClientes = true;
 					Console.WriteLine("Apellido: {0}, Dni: {1}, Cantidad de cuentas: {2}", e.ApellidoC, e.Dni, cantidad);
 					
 					foreach (Cuenta d in c.listaCuentas)
@@ -170,7 +171,7 @@ namespace Proyecto_POO
 						}
 					}
 				}
-				else{
+				if(halloClientes == false){
 						Console.WriteLine("No hay clientes con multiples cuentas");
 				}
 			}
