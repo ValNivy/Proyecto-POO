@@ -27,6 +27,11 @@ namespace Proyecto_POO
 			this.ListaClientes = new List<Cliente>();
 		}
 		
+		public string Nombre 
+		{
+			get {return this.nombre;}
+		}
+		
 		public List<Cuenta> listaCuentas
 		{
 			get {return ListaCuentas;}
@@ -37,23 +42,23 @@ namespace Proyecto_POO
 			get {return ListaClientes;}
 		}
 		
-		public void AgregarCuenta(Cuenta P){
-			ListaCuentas.Add(P);
+		public void AgregarCuenta(Cuenta p){
+			ListaCuentas.Add(p);
 		}
 		
-		public void AgregarCliente(Cliente P){
-			ListaClientes.Add(P);
+		public void AgregarCliente(Cliente d){
+			ListaClientes.Add(d);
 		}
 		
-		public void EliminarCuenta(Cuenta R){
-			ListaCuentas.Remove(R);
+		public void EliminarCuentas(Cuenta p){
+			ListaCuentas.Remove(p);
 		}
 		
-		public void EliminarCliente(Cliente R){
-			ListaClientes.Remove(R);
+		public void EliminarClientes(Cliente d){
+			ListaClientes.Remove(d);
 		}
 		
-		public int CantidadCuenta(){
+		public int CantidadCuentas(){
 			return ListaCuentas.Count;
 		}
 		
@@ -61,18 +66,18 @@ namespace Proyecto_POO
 			return ListaClientes.Count;
 		}
 		
-		public Cuenta VerCuentas(int i){
-			return ListaCuentas[i];                    
+		public Cuenta VerCuentas(int p){
+			return ListaCuentas[p];                    
 		}
-		public Cliente VerCliente(int i){
-			return ListaClientes[i];
+		public Cliente VerCliente(int d){
+			return ListaClientes[d];
 		}
-		public bool ExisteCuenta(Cuenta D){ 
-			return ListaCuentas.Contains(D);
+		public bool ExisteCuenta(Cuenta p){ 
+			return ListaCuentas.Contains(p);
 		}
 		
-		public bool ExisteCliente(Cliente D){
-			return ListaClientes.Contains(D);
+		public bool ExisteCliente(Cliente d){
+			return ListaClientes.Contains(d);
 		}
 		
 	}
