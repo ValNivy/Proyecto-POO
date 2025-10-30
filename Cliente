@@ -24,12 +24,12 @@ namespace Proyecto_POO
 		private string dni;
 		
 		public string NombreC{
-			get{return NombreC;}
+			get{return nombre;}
 			set{nombre = value;}
 		}
 		
 		public string ApellidoC{
-			get{return ApellidoC;}
+			get{return apellido;}
 			set{apellido = value;}
 		}
 		
@@ -39,17 +39,17 @@ namespace Proyecto_POO
 		}
 		
 		public string Telefono{
-			get{return Telefono;}
+			get{return telefono;}
 			set{telefono = value;}
 		}
 		
 		public string Email{
-			get{return Email;}
+			get{return email;}
 			set{email = value;}
 		}
 		
 		public string Dni{
-			get{return Dni;}
+			get{return dni;}
 			set{dni = value;}
 		}
 		
