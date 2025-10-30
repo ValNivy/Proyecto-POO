@@ -84,7 +84,6 @@ namespace Proyecto_POO
 			else
 			{
 				Console.WriteLine("La cuenta no existe o el cliente no tiene más cuentas.");
-				c.EliminarClientes(d);
 			}
 		}
 		
@@ -99,8 +98,7 @@ namespace Proyecto_POO
 			}
 			else
 			{
-				Console.WriteLine("El Cliente no existe.");
-				return;
+				Console.WriteLine("El cliente no existe.");
 			}
 		}
 		
