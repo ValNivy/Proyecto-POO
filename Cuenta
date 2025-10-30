@@ -79,7 +79,7 @@ namespace Proyecto_POO
 		
 		public void MostrarDatosP()
 		{
-			Console.WriteLine("\nNumero de cuenta: {0}  \nApellido de propietario: {1} \nDni del propietario: {2} \nSaldo: ${3}\n---------", numero, apellido, dni, saldo);
+			Console.WriteLine("\nNumero de cuenta: {0}  \nApellido de propietario: {1} \nDni del propietario: {2} \nSaldo: ${3}\n", numero, apellido, dni, saldo);
 		}
 	}
 }
