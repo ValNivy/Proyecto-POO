@@ -1,0 +1,22 @@
+/*
+ * Created by SharpDevelop.
+ * User: Valentin
+ * Date: 30/10/2025
+ * Time: 18:47
+ * 
+ * To change this template use Tools | Options | Coding | Edit Standard Headers.
+ */
+using System;
+
+namespace Proyecto_POO
+{
+	/// <summary>
+	/// Description of NumeroIgualExcepction.
+	/// </summary>
+	public class NumeroIgualExcepction : Exception
+	{
+		public NumeroIgualExcepction()
+		{
+		}
+	}
+}
