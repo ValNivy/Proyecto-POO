@@ -52,19 +52,34 @@ namespace Proyecto_POO
 			cont++;
 		}
 		
-		public void DepositarSaldo(double P){
+		public void DepositarSaldo(double P)
+		{
 			saldo += P;
 			Console.WriteLine("Deposito exitoso");
 		}
 		
-		public void ExtraerSaldo(double P){
+		public void ExtraerSaldo(double P)
+		{
+			if (this.saldo >= P)
+			{
 			saldo -= P;
+			
 			Console.WriteLine("Extracción exitosa");
+			}
+			else
+			{
+				//throw new ExceptionSaldo("No hay saldo suficiente como para esa extraccion");
+			}
 		}
 		
 		public int ContarCuentas(){
 			return cont;
 		}
 		//hacer metodo para contar cantidad de cuentas
+		
+		public void MostrarDatosP()
+		{
+			Console.WriteLine("\nNumero de cuenta: {0}  \nApellido de propietario: {1} \nDni del propietario: {2} \nSaldo: ${3}\n---------", numero, apellido, dni, saldo);
+		}
 	}
 }
