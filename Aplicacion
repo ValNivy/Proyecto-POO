@@ -32,10 +32,14 @@ namespace Proyecto_POO
 			Console.WriteLine("Ingrese su DNI:");
 			p.Dni = Console.ReadLine();
 			
-			if (c.ExisteCuenta(p) == false){
-				Console.WriteLine("No tiene una cuenta, debe crearse un perfil de cliente nuevo.");
-				NuevoCliente(c, d);
-			}
+			foreach(Cuenta e in c.listaCuentas)
+				{
+					if(p.Dni == e.Dni)
+					{
+						Console.WriteLine("No existe en el sistema, debe agregarse como cliente nuevo\n");
+						NuevoCliente(c,d);
+					}
+				}
 			
 			Console.WriteLine("Ingrese su saldo: ");
 			p.Saldo = double.Parse(Console.ReadLine());
@@ -73,35 +77,70 @@ namespace Proyecto_POO
 		}
 		
 		public static void EliminarCuenta(Banco c, Cuenta p, Cliente d)
-		{
-			Console.WriteLine("Ingrese su numero de cuenta: ");
-			p.Numero = Console.ReadLine();
-			if (c.ExisteCuenta(p) == true)
-			{
-				c.EliminarCuentas(p);
-				Console.WriteLine("Cuenta eliminada.");
-			}
-			else
-			{
-				Console.WriteLine("La cuenta no existe o el cliente no tiene más cuentas.");
-			}
+        {
+            Console.Write("Ingrese su número de cuenta: ");
+            string numeroCuenta = Console.ReadLine();
+            int cantidad = 0;
+            string ayuda = "";
+            Cuenta cuentaAEliminar = null; //exception para cuenta no existente
+            Cliente repuesto = null;
+            
+            foreach (Cuenta P in c.listaCuentas)
+            {
+                if (P.Numero == numeroCuenta)
+                {
+                    cuentaAEliminar = P;
+					ayuda = cuentaAEliminar.Dni;
+                }
+            }
+            
+
+            if (c.ExisteCuenta(cuentaAEliminar) == true)
+            {
+                c.EliminarCuentas(cuentaAEliminar);
+                Console.WriteLine("Cuenta eliminada.");
+            }
+            
+            foreach(Cuenta r in c.listaCuentas)
+				{
+					if(ayuda == r.Dni)
+					{
+						cantidad++;
+					}
+				}
+
+            if (cantidad == 0){
+            	foreach(Cliente m in c.listaClientes){
+            		if(ayuda == m.Dni){
+              			repuesto = m;
+            		}
+              	}
+            	if(ayuda == repuesto.Dni){
+            		EliminarCliente(c, repuesto);
+            	}
+            }
 		}
+ 
 		
 		public static void EliminarCliente(Banco c, Cliente d)
 		{
 			Console.WriteLine("Ingrese su Dni (unico de cada Cliente): ");
 			d.Dni = Console.ReadLine();
-			if (c.ExisteCliente(d) == true)
-			{
-				c.EliminarClientes(d);
-				Console.WriteLine("Cliente eliminado.");
+			Cliente clienteAEliminar = null;
+			foreach(Cliente l in c.listaClientes){
+				if(d.Dni == l.Dni){
+					clienteAEliminar = l;
+				}
 			}
+			if (c.ExisteCliente(clienteAEliminar) == true){
+				c.EliminarClientes(clienteAEliminar);
+				Console.WriteLine("Cliente eliminado.");
+			    }
 			else
 			{
 				Console.WriteLine("El cliente no existe.");
 			}
-		}
-		
+			}
 		
 		public static void ListarClientes(Banco c)
 		{
