@@ -12,29 +12,28 @@ namespace Proyecto_POO
 {
 	class Program
 	{
-		public static void CuentaNueva(Banco c1, Cuenta p1, Cliente d1){
+		public static void CuentaNueva(Banco c, Cuenta p1, Cliente d1){
 			Console.WriteLine("Ingrese su numero:");
 			p1.Numero = Console.ReadLine();
 			Console.WriteLine("Ingrese su apellido");
 			p1.Apellido = Console.ReadLine();
 			Console.WriteLine("Ingrese su DNI:");
 			p1.Dni = Console.ReadLine();
-			foreach
-			if (c1.ExisteCuenta(p1) == false){
+			if (c.ExisteCuenta(p1) == false){
 				Console.WriteLine("No tiene una cuenta, debe crearse un cliente nuevo.");
-				ClienteNuevo(c1, d1);
+				ClienteNuevo(c, d1);
 			}
 			Console.WriteLine("Ingrese su saldo");
 			p1.Saldo = double.Parse(Console.ReadLine());
-			c1.AgregarCuenta(p1);
+			c.AgregarCuenta(p1);
 			Console.WriteLine("¡Cuenta agregada con exito!");
 		}
 		
-		public static void EliminarCuentaStatic(Banco c1, Cuenta p1){
+		public static void EliminarCuentaStatic(Banco c, Cuenta p1){
 			Console.WriteLine("Ingrese su numero de cuenta");
 			p1.Numero = Console.ReadLine();
-			if (c1.ExisteCuenta(p1) == true){
-				c1.EliminarCuenta(p1);
+			if (c.ExisteCuenta(p1) == true){
+				c.EliminarCuenta(p1);
 				Console.WriteLine("Cuenta eliminada");
 			}
 			else{
@@ -47,7 +46,7 @@ namespace Proyecto_POO
 			
 		}
 			
-		public static void ClienteNuevo(Banco c1, Cliente d1){
+		public static void ClienteNuevo(Banco c, Cliente d1){
 		 	Console.WriteLine("Ingrese su nombre:");
 			d1.NombreC = Console.ReadLine();
 			Console.WriteLine("Ingrese su apellido");
@@ -60,13 +59,24 @@ namespace Proyecto_POO
 			d1.Telefono = Console.ReadLine();
 			Console.WriteLine("Ingrese su email:");
 			d1.Email = Console.ReadLine();
+			c.AgregarCliente(d1);
 			Console.WriteLine("¡Cliente agregado con éxito!");
 		}
 		
-		public static void ListarClientes(Banco c1, Cuenta p1, int indice){
-			foreach (Cliente c in listaClientes){
-				if (ContarCuentas(i) == p1.Dni){
-					
+		public static void ListarClientes(Banco c, int indice){
+			string i = "";
+			double f = 0;
+			foreach(Cliente e in c.listaClientes){
+				indice = 0;
+				foreach(Cuenta d in c.listaCuentas){
+					if(e.Dni == d.Dni){
+						indice++;
+						i = d.Dni;
+						f = d.Saldo;
+					}
+				}
+				if(indice > 1){
+						Console.WriteLine("{0}, {1}", i, f);
 				}
 			}
 		}
@@ -77,17 +87,31 @@ namespace Proyecto_POO
 de cuenta y saldo de cada una.*/
 			string opcion;
 			int indice = 0;
-			Banco c1 = new Banco("Banco de los programadores");
+			Banco c = new Banco("Banco de los programadores");
 			Cuenta p1 = new Cuenta("","","",0);
 			Cliente d1 = new Cliente("","","","","","");
+			Cuenta p21 = new Cuenta("02","Molina","411223344",11600);
+			Cuenta p2 = new Cuenta("01","Molina","411223344",11600);
+            Cliente d2 = new Cliente("Valentin","Molina","Av Italia","1127476774","gyokaro@gmail.com","411223344");
+            Cuenta p3 = new Cuenta("11","Santa Cruz","55667788",40000);
+            Cuenta p31 = new Cuenta("12","Santa Cruz","55667788",40000);
+            Cliente d3 = new Cliente("Evelyn","Santa Cruz","Calle EE UU","1133190322","simpsonita@gmail.com", "55667788");
+            Cuenta p4 = new Cuenta("21","Dufour","47018550",8900);
+            Cliente d4 = new Cliente("Lautaro","Dufour","Av Serbia","1165172012","lautyduf@gmail.com","99001111");
+            c.AgregarCliente(d2);
+            c.AgregarCuenta(p2);
+            c.AgregarCuenta(p21);
+            c.AgregarCliente(d3);
+            c.AgregarCuenta(p3);
+            c.AgregarCuenta(p31);
 			do
 			{
 			Console.WriteLine("¿Qué desea hacer?\n a)Agregar una cuenta\nb)Eliminar una cuenta\nc)Lista de clientes con más de una cuenta");
 			opcion = Console.ReadLine();
 			switch (opcion){
-					case "a": CuentaNueva(c1, p1, d1);break;
-					case "b": EliminarCuentaStatic(c1, p1);break;
-					case "c": ListarClientes(c1, p1, indice);break;
+					case "a": CuentaNueva(c, p1, d1);break;
+					case "b": EliminarCuentaStatic(c, p1);break;
+					case "c": ListarClientes(c, indice);break;
 			}}while(opcion != "f");
 		}
 	}
