@@ -20,25 +20,26 @@ namespace Proyecto_POO
 		private string apellido;
 		private string dni;
 		private double saldo;
+		private static int cont = 0;
 		
 		public string Numero
 		{
-			get {return Numero;}
+			get {return numero;}
 			set {numero = value;}
 		}
 		public string Apellido
 		{
-			get {return Apellido;}
+			get {return apellido;}
 			set {apellido = value;}
 		}
 		public string Dni
 		{
-			get {return Dni;}
+			get {return dni;}
 			set {dni = value;}
 		}
 		public double Saldo
 		{
-			get {return Saldo;}
+			get {return saldo;}
 			set {saldo = value;}
 		}
 		
@@ -48,6 +49,7 @@ namespace Proyecto_POO
 			this.apellido = apellido;
 			this.dni = dni;
 			this.saldo = saldo;
+			cont++;
 		}
 		
 		public void DepositarSaldo(double P){
@@ -60,9 +62,8 @@ namespace Proyecto_POO
 			Console.WriteLine("Extracción exitosa");
 		}
 		
-		public int ContarCuentas(int i){
-			i++;
-			return i;
+		public int ContarCuentas(){
+			return cont;
 		}
 		//hacer metodo para contar cantidad de cuentas
 	}
