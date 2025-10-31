@@ -13,6 +13,7 @@ namespace Proyecto_POO
 {
 	class Program
 	{
+		//agregar cuenta
 		public static void CuentaNueva(Banco c)
 		{
 			bool NumeroInvalido = false;
@@ -63,6 +64,7 @@ namespace Proyecto_POO
 			}
 		}
 		
+		//si no hay cliente para esa cuenta, agregar cliente
 		public static void NuevoCliente(Banco c, string dni, string apellido)
 		{
 			Cliente d = new Cliente("", apellido,"","","", dni);
@@ -78,6 +80,8 @@ namespace Proyecto_POO
 			Console.WriteLine("¡Cliente agregado con éxito!");
 		}
 		
+		
+		//eliminar cuenta
 		public static void EliminarCuenta(Banco c)
 		{
 			Console.Write("Ingrese su número de cuenta: ");
@@ -125,10 +129,10 @@ namespace Proyecto_POO
 			}
 		}
 		
-		
+		//no hay mas cuentas para ese cliente. Eliminar Cliente
 		public static void EliminarCliente(Banco c)
 		{
-			Console.WriteLine("Ingrese su Dni (unico de cada Cliente): ");
+			Console.WriteLine("No hay mas Cuentas para este Cliente.\nIngrese su Dni (unico de cada Cliente): ");
 			string dni = Console.ReadLine();
 			Cliente clienteAEliminar = null;
 			foreach(Cliente l in c.listaClientes){
@@ -145,6 +149,8 @@ namespace Proyecto_POO
 				Console.WriteLine("El cliente no existe.");
 			}
 		}
+		
+		//Listar clientes con mas de una cuenta
 		
 		public static void ListarClientes(Banco c)
 		{
@@ -181,8 +187,9 @@ namespace Proyecto_POO
 				}
 
 		}
-		
-		public static void ExtraerStatic(Banco c){
+			
+			//Extrar de una Cuenta			
+			public static void ExtraerStatic(Banco c){
 			Cuenta ayuda = null;
 			bool saldoInf = false;
 			double extraccion = 0;
@@ -213,6 +220,7 @@ namespace Proyecto_POO
 			}
 		}
 		
+		//Deposito en una cuenta
 		public static void DepositarStatic(Banco c){
 			Cuenta ayuda = null;
 			Console.WriteLine("Ingrese el numero de cuenta:");
@@ -230,6 +238,7 @@ namespace Proyecto_POO
 			}
 		}
 		
+		//Transferencia entre cuentas
 		public static void TransferirStatic(Banco c){
 			Cuenta ayuda = null;
 			Cuenta ayudados = null;
@@ -280,6 +289,7 @@ namespace Proyecto_POO
 				}
 			}
 			
+			//Listado de Cuentas			
 			public static void ListadoCuentas(Banco c)
 			{
 				if (c.CantidadCuentas() == 0)
@@ -293,8 +303,7 @@ namespace Proyecto_POO
 				}
 			}
 			
-			//Listado de clientes
-			
+			//Listado de Clientes			
 			public static void ListadoClientes(Banco c)
 			{
 				if (c.CantidadClientes() == 0)
@@ -314,7 +323,7 @@ namespace Proyecto_POO
 				//invocamos variables generales para cada uno. Asi cumpliendo la composicion.
 				Banco c = new Banco("Banco de los Programadores");
 				//Listado de clientes , indicando nro de cuenta, apellido, dni y saldo de cada una
-				/*Cliente d2 = new Cliente("Valentin","Molina","Av Italia","1127476774","gyokaro@gmail.com","11223344");
+				Cliente d2 = new Cliente("Valentin","Molina","Av Italia","1127476774","gyokaro@gmail.com","11223344");
 				Cuenta p21 = new Cuenta("02","Molina","11223344",11600);
 				Cuenta p2 = new Cuenta("01","Molina","11223344",1600);
 				Cliente d3 = new Cliente("Evelyn","Santa Cruz","Calle EE UU","1133190322","simpsonita@gmail.com", "55667788");
@@ -330,7 +339,7 @@ namespace Proyecto_POO
 				c.AgregarCuenta(p3);
 				c.AgregarCuenta(p31);
 				c.AgregarCliente(d4);
-				c.AgregarCuenta(p4);*/
+				c.AgregarCuenta(p4);
 				
 				do
 				{
