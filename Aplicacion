@@ -321,7 +321,7 @@ namespace Proyecto_POO
 				Cuenta p3 = new Cuenta("11","Santa Cruz","55667788",40000);
 				Cuenta p31 = new Cuenta("12","Santa Cruz","55667788",96500);
 				Cliente d4 = new Cliente("Lautaro","Dufour","Av Serbia","1165172012","lautyduf@gmail.com","99001111");
-				Cuenta p4 = new Cuenta("21","Dufour","47018550",8900);
+				Cuenta p4 = new Cuenta("21","Dufour","99001111",8900);
 				//agregamos los clientes con el metodo de Banco
 				c.AgregarCliente(d2);
 				c.AgregarCuenta(p2);
