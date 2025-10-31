@@ -323,7 +323,7 @@ namespace Proyecto_POO
 				//invocamos variables generales para cada uno. Asi cumpliendo la composicion.
 				Banco c = new Banco("Banco de los Programadores");
 				//Listado de clientes , indicando nro de cuenta, apellido, dni y saldo de cada una
-				Cliente d2 = new Cliente("Valentin","Molina","Av Italia","1127476774","gyokaro@gmail.com","11223344");
+				/*Cliente d2 = new Cliente("Valentin","Molina","Av Italia","1127476774","gyokaro@gmail.com","11223344");
 				Cuenta p21 = new Cuenta("02","Molina","11223344",11600);
 				Cuenta p2 = new Cuenta("01","Molina","11223344",1600);
 				Cliente d3 = new Cliente("Evelyn","Santa Cruz","Calle EE UU","1133190322","simpsonita@gmail.com", "55667788");
@@ -339,7 +339,7 @@ namespace Proyecto_POO
 				c.AgregarCuenta(p3);
 				c.AgregarCuenta(p31);
 				c.AgregarCliente(d4);
-				c.AgregarCuenta(p4);
+				c.AgregarCuenta(p4);*/
 				
 				do
 				{
