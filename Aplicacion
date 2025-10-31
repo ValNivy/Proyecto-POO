@@ -47,7 +47,7 @@ namespace Proyecto_POO
 				NuevoCliente(c, p.Dni, p.Apellido);
 			}
 			
-			Console.WriteLine("Ingrese su saldo: ");
+			Console.WriteLine("Ingrese su saldo);
 			p.Saldo = double.Parse(Console.ReadLine());
 			c.AgregarCuenta(p);
 			Console.WriteLine("¡Cuenta agregada con exito!");
