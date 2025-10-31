@@ -60,16 +60,8 @@ namespace Proyecto_POO
 		
 		public void ExtraerSaldo(double P)
 		{
-			if (this.saldo >= P)
-			{
 			saldo -= P;
-			
 			Console.WriteLine("Extracción exitosa");
-			}
-			else
-			{
-				//throw new ExceptionSaldo("No hay saldo suficiente como para esa extraccion");
-			}
 		}
 		
 		public int ContarCuentas(){
