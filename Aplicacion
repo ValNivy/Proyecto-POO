@@ -2,10 +2,8 @@
  * Created by SharpDevelop.
  * User: Valentin
  * Date: 21/10/2025
- * Time: 18:08
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
+
 using System;
 using System.Collections.Generic;
 
@@ -21,76 +19,141 @@ namespace Proyecto_POO
 			bool DniNoEncontrado = true;
 			bool ApellidoValido = false;
 			bool DniValido = false;
-			Cuenta p = new Cuenta("","","", 0);
-			while (!EsNumero){
-			try{
-				Console.WriteLine("Ingrese numero de cuenta:");
-				p.Numero = Console.ReadLine();
-				ValidarEntradaNumerica(p.Numero);
-				EsNumero = true;
+			Cuenta p = new Cuenta("", "", "", 0);
+
+			// Número
+			while (!EsNumero)
+			{
+				try
+				{
+					Console.WriteLine("Ingrese numero de cuenta:");
+					p.Numero = Console.ReadLine();
+
+					if (p.Numero == null)
+						throw new CaracterInvalidoException();
+
+					ValidarEntradaNumerica(p.Numero);
+					EsNumero = true;
 				}
-					catch (CaracterInvalidoException){
-						Console.WriteLine("Error, intente nuevamente. Ingrese un número.");
-					}}
-			while(!NumeroInvalido){
-				try{
+				catch (CaracterInvalidoException)
+				{
+					Console.WriteLine("Error, intente nuevamente. Ingrese un número.");
+				}
+			}
+
+			while (!NumeroInvalido)
+			{
+				try
+				{
 					ValidarNumero(p.Numero, c);
 					NumeroInvalido = true;
 				}
-				catch (NumeroIgualExcepction){
+				catch (NumeroIgualExcepction)
+				{
 					Console.WriteLine("Ese numero de cuenta ya existe, intente nuevamente\n");
+					Console.WriteLine("Ingrese numero de cuenta:");
+					p.Numero = Console.ReadLine();
+					ValidarEntradaNumerica(p.Numero);
 				}
 			}
-			while(!ApellidoValido){
-			try{
-			Console.WriteLine("Ingrese su apellido");
-			p.Apellido = Console.ReadLine();
-			ValidarEntrada(p.Apellido);
-			ApellidoValido = true;
+
+			// Apellido
+			while (!ApellidoValido)
+			{
+				try
+				{
+					Console.WriteLine("Ingrese su apellido:");
+					p.Apellido = Console.ReadLine();
+
+					if (p.Apellido == null)
+						throw new CaracterInvalidoException();
+
+					ValidarEntrada(p.Apellido);
+					ApellidoValido = true;
+				}
+				catch (CaracterInvalidoException)
+				{
+					Console.WriteLine("Se introdujo un caracter invalido");
+				}
 			}
-			catch (CaracterInvalidoException){
-				Console.WriteLine("Se introdujo un caracter invalido");
-				}}
-			while (!DniValido){
-			try{
-			Console.WriteLine("Ingrese su DNI:");
-			p.Dni = Console.ReadLine();
-			ValidarLetra(p.Dni);
-			DniValido = true;
+
+			// DNI
+			while (!DniValido)
+			{
+				try
+				{
+					Console.WriteLine("Ingrese su DNI:");
+					p.Dni = Console.ReadLine();
+
+					if (p.Dni == null)
+						throw new CaracterInvalidoException();
+
+					ValidarEntradaNumerica(p.Dni);
+					DniValido = true;
+				}
+				catch (CaracterInvalidoException)
+				{
+					Console.WriteLine("Se introdujo un caracter invalido");
+				}
 			}
-			catch (CaracterInvalidoException){
-				Console.WriteLine("Se introdujo un caracter invalido");
-				}}
-			
-			foreach (Cliente r in c.listaClientes){
-				if(r.Dni == p.Dni)
-				{ 
+
+			// Buscar DNI
+			foreach (Cliente r in c.listaClientes)
+			{
+				if (r.Dni == p.Dni)
+				{
 					DniNoEncontrado = false;
 				}
 			}
-			if  (DniNoEncontrado == true){
-			
+
+			if (DniNoEncontrado == true)
+			{
 				Console.WriteLine("No existe en el sistema, debe agregarse como cliente nuevo\n");
 				NuevoCliente(c, p.Dni, p.Apellido);
 			}
-			
-			Console.WriteLine("Ingrese su saldo");
-			p.Saldo = double.Parse(Console.ReadLine());
+
+			// Saldo
+			bool SaldoValido = false;
+			while (!SaldoValido)
+			{
+				try
+				{
+					Console.WriteLine("Ingrese su saldo:");
+					string aux = Console.ReadLine();
+
+					if (aux == null)
+						throw new CaracterInvalidoException();
+
+					ValidarEntradaNumerica(aux);
+
+					p.Saldo = double.Parse(aux);
+					SaldoValido = true;
+				}
+				catch (CaracterInvalidoException)
+				{
+					Console.WriteLine("El saldo contiene caracteres inválidos");
+				}
+				catch (FormatException)
+				{
+					Console.WriteLine("Formato inválido de número");
+				}
+			}
+
 			c.AgregarCuenta(p);
 			Console.WriteLine("¡Cuenta agregada con exito!");
 		}
-		
+
 		static void ValidarNumero(string p, Banco c)
 		{
-			foreach(Cuenta d in c.listaCuentas)
+			foreach (Cuenta d in c.listaCuentas)
 			{
-				if(p == d.Numero)
+				if (p == d.Numero)
 				{
 					throw new NumeroIgualExcepction();
 				}
 			}
 		}
-		
+
 		//si no hay cliente para esa cuenta, agregar cliente
 		public static void NuevoCliente(Banco c, string dni, string apellido)
 		{
@@ -98,66 +161,123 @@ namespace Proyecto_POO
 			bool DireccionValida = false;
 			bool TelefonoValido = false;
 			bool EmailValido = false;
-			Cliente d = new Cliente("", apellido,"","","", dni);
-			while(!NombreValido){
-			try{
-			Console.WriteLine("Ingrese su nombre:");
-			d.NombreC = Console.ReadLine();
-			ValidarEntrada(d.NombreC);
-			NombreValido = true;
-			}
-			catch (CaracterInvalidoException){
-				Console.WriteLine("Se introdujo un caracter invalido");
+
+			Cliente d = new Cliente("", apellido, "", "", "", dni);
+
+			// Nombre
+			while (!NombreValido)
+			{
+				try
+				{
+					Console.WriteLine("Ingrese su nombre:");
+					d.NombreC = Console.ReadLine();
+
+					if (d.NombreC == null)
+						throw new CaracterInvalidoException();
+
+					ValidarEntrada(d.NombreC);
+					NombreValido = true;
+				}
+				catch (CaracterInvalidoException)
+				{
+					Console.WriteLine("Se introdujo un caracter invalido");
 				}
 			}
-			while (!DireccionValida){
-			try{
-			Console.WriteLine("Ingrese su dirección:");
-			d.Direccion = Console.ReadLine();
-			ValidarEntrada(d.Direccion);
-			DireccionValida = true;
-			}
-			catch (CaracterInvalidoException){
-			Console.WriteLine("Se introdujo un caracter invalido");
-			}
-			}
-			while (!TelefonoValido){
-			try{
-			Console.WriteLine("Ingrese su telefono:");
-			d.Telefono = Console.ReadLine();
-			ValidarLetra(d.Telefono);
-			TelefonoValido = true;
+
+			// Dirección
+			while (!DireccionValida)
+			{
+				try
+				{
+					Console.WriteLine("Ingrese su dirección:");
+					d.Direccion = Console.ReadLine();
+
+					if (d.Direccion == null)
+						throw new CaracterInvalidoException();
+
+					ValidarEntrada(d.Direccion);
+					DireccionValida = true;
 				}
-			catch (CaracterInvalidoException){
-				Console.WriteLine("Se introdujo un caracter invalido");
+				catch (CaracterInvalidoException)
+				{
+					Console.WriteLine("Se introdujo un caracter invalido");
+				}
 			}
-			}	
-			while(!EmailValido){
-			try{
-			Console.WriteLine("Ingrese su email:");
-			d.Email = Console.ReadLine();
-			ValidarEmail(d.Email);
-			EmailValido = true;
+
+			// Teléfono
+			while (!TelefonoValido)
+			{
+				try
+				{
+					Console.WriteLine("Ingrese su telefono:");
+					d.Telefono = Console.ReadLine();
+
+					if (d.Telefono == null)
+						throw new CaracterInvalidoException();
+
+					ValidarEntradaNumerica(d.Telefono);
+					TelefonoValido = true;
+				}
+				catch (CaracterInvalidoException)
+				{
+					Console.WriteLine("Se introdujo un caracter invalido");
+				}
 			}
-			catch (CaracterInvalidoException){
-				Console.WriteLine("Se introdujo un caracter invalido");
+
+			// Email
+			while (!EmailValido)
+			{
+				try
+				{
+					Console.WriteLine("Ingrese su email:");
+					d.Email = Console.ReadLine();
+
+					if (d.Email == null)
+						throw new CaracterInvalidoException();
+
+					ValidarEmail(d.Email);
+					EmailValido = true;
+				}
+				catch (CaracterInvalidoException)
+				{
+					Console.WriteLine("Se introdujo un caracter invalido");
+				}
 			}
-			}
+
 			c.AgregarCliente(d);
 			Console.WriteLine("¡Cliente agregado con éxito!");
 		}
-		
-		
+
 		//eliminar cuenta
 		public static void EliminarCuenta(Banco c)
 		{
-			Console.Write("Ingrese su número de cuenta: ");
-			string numeroCuenta = Console.ReadLine();
+			bool EntradaValida = false;
+			string numeroCuenta = "";
+			ListadoCuentas(c);
+			while (!EntradaValida)
+			{
+				try
+				{
+					Console.Write("Ingrese su número de cuenta: ");
+					numeroCuenta = Console.ReadLine();
+
+					if (numeroCuenta == null)
+						throw new CaracterInvalidoException();
+
+					ValidarEntradaNumerica(numeroCuenta);
+					EntradaValida = true;
+				}
+				catch (CaracterInvalidoException)
+				{
+					Console.WriteLine("Número inválido. Reintente.");
+				}
+			}
+
 			int cantidad = 0;
 			string ayuda = "";
 			Cuenta cuentaAEliminar = null;
 			Cliente repuesto = null;
-			
+
 			foreach (Cuenta P in c.listaCuentas)
 			{
 				if (P.Numero == numeroCuenta)
@@ -172,74 +292,108 @@ namespace Proyecto_POO
 				c.EliminarCuentas(cuentaAEliminar);
 				Console.WriteLine("Cuenta eliminada.");
 			}
-			else{
-				Console.WriteLine("La cuenta no existe");
-			}
-			
-			foreach(Cuenta r in c.listaCuentas)
+			else
 			{
-				if(ayuda == r.Dni)
+				Console.WriteLine("La cuenta no existe");
+				EliminarCuenta(c);
+			}
+
+			foreach (Cuenta r in c.listaCuentas)
+			{
+				if (ayuda == r.Dni)
 				{
 					cantidad++;
 				}
 			}
 
-			if (cantidad == 0){
-				foreach(Cliente m in c.listaClientes){
-					if(ayuda == m.Dni){
+			if (cantidad == 0)
+			{
+				foreach (Cliente m in c.listaClientes)
+				{
+					if (ayuda == m.Dni)
+					{
 						repuesto = m;
 					}
 				}
-				if(ayuda == repuesto.Dni){
+
+				if (repuesto != null && ayuda == repuesto.Dni)
+				{
 					EliminarCliente(c);
 				}
 			}
 		}
-		
+
 		//no hay mas cuentas para ese cliente. Eliminar Cliente
 		public static void EliminarCliente(Banco c)
 		{
-			Console.WriteLine("No hay mas Cuentas para este Cliente.\nIngrese su Dni (unico de cada Cliente): ");
-			string dni = Console.ReadLine();
+			bool Valido = false;
+			string dni = "";
+
+			while (!Valido)
+			{
+				try
+				{
+					Console.WriteLine("No hay mas Cuentas para este Cliente.\nIngrese su Dni:");
+					dni = Console.ReadLine();
+
+					if (dni == null)
+						throw new CaracterInvalidoException();
+
+					ValidarEntradaNumerica(dni);
+					Valido = true;
+				}
+				catch (CaracterInvalidoException)
+				{
+					Console.WriteLine("Se introdujo un caracter invalido");
+				}
+			}
+
 			Cliente clienteAEliminar = null;
-			foreach(Cliente l in c.listaClientes){
-				if(dni == l.Dni){
+
+			foreach (Cliente l in c.listaClientes)
+			{
+				if (dni == l.Dni)
+				{
 					clienteAEliminar = l;
 				}
 			}
-			if (c.ExisteCliente(clienteAEliminar) == true){
+
+			if (c.ExisteCliente(clienteAEliminar) == true)
+			{
 				c.EliminarClientes(clienteAEliminar);
 				Console.WriteLine("Cliente eliminado.");
 			}
 			else
 			{
 				Console.WriteLine("El cliente no existe.");
+				EliminarCliente(c);
 			}
 		}
-		
+
 		//Listar clientes con mas de una cuenta
-		
 		public static void ListarClientes(Banco c)
 		{
 			Console.WriteLine("Clientes con mas de una cuenta: \n");
 			bool halloClientes = false;
-			foreach(Cliente e in c.listaClientes)
+
+			foreach (Cliente e in c.listaClientes)
 			{
 				int cantidad = 0;
-				
-				foreach(Cuenta d in c.listaCuentas)
+
+				foreach (Cuenta d in c.listaCuentas)
 				{
-					if(e.Dni == d.Dni)
+					if (e.Dni == d.Dni)
 					{
 						cantidad++;
 					}
 				}
-				
+
 				if (cantidad > 1)
 				{
 					halloClientes = true;
+
 					Console.WriteLine("Apellido: {0}, Dni: {1}, Cantidad de cuentas: {2}", e.ApellidoC, e.Dni, cantidad);
-					
+
 					foreach (Cuenta d in c.listaCuentas)
 					{
 						if (e.Dni == d.Dni)
@@ -249,390 +403,514 @@ namespace Proyecto_POO
 					}
 				}
 			}
-				if(halloClientes == false){
-					Console.WriteLine("No hay clientes con multiples cuentas");
-				}
+
+			if (!halloClientes)
+			{
+				Console.WriteLine("No hay clientes con multiples cuentas");
+			}
 
 		}
-			
-			//Extrar de una Cuenta			
-			public static void ExtraerStatic(Banco c){
+
+		//Extraer
+		public static void ExtraerStatic(Banco c)
+		{
 			Cuenta ayuda = null;
-			bool saldoInf = false;
 			bool NumeroValido = false;
+			bool saldoInf = false;
+			string num = null;
 			double extraccion = 0;
-			string num = null;
-			while (!NumeroValido){
-			try{
-			Console.WriteLine("Ingrese el numero de cuenta:");
-			num = Console.ReadLine();
-			ValidarExistencia(num, c);
-			NumeroValido = true;
-			}
-				catch(CuentaInexistenteException){		
-					Console.WriteLine("Se ingresó un numero de cuenta inexistente. Intente nuevamente");
+
+			while (!NumeroValido)
+			{
+				try
+				{
+					Console.WriteLine("Ingrese el numero de cuenta:");
+					num = Console.ReadLine();
+
+					if (num == null)
+						throw new CaracterInvalidoException();
+					
+					ValidarEntradaNumerica(num);
+					ValidarExistencia(num, c);
+					NumeroValido = true;
+				}
+				catch (CaracterInvalidoException)
+				{
+					Console.WriteLine("Número inválido");
+				}
+				catch (CuentaInexistenteException)
+				{
+					Console.WriteLine("Cuenta inexistente");
 				}
 			}
-			while(!saldoInf){
-			try{
-			Console.WriteLine("Ingrese el saldo a extraer");
-			extraccion = double.Parse(Console.ReadLine());
-			foreach(Cuenta e in c.listaCuentas){
-				if (e.Numero == num){
-					ayuda = e;
+
+			while (!saldoInf)
+			{
+				try
+				{
+					Console.WriteLine("Ingrese el saldo a extraer:");
+					string aux = Console.ReadLine();
+
+					if (aux == null)
+						throw new CaracterInvalidoException();
+
+					extraccion = double.Parse(aux);
+					foreach (Cuenta e in c.listaCuentas)
+					{
+						if (e.Numero == num)
+						{
+							ayuda = e;
+						}
+					}
+
+					ValidarSaldo(ayuda, extraccion);
+					saldoInf = true;
+				}
+				catch (CaracterInvalidoException)
+				{
+					Console.WriteLine("Entrada inválida.");
+				}
+				catch (FormatException)
+				{
+					Console.WriteLine("Formato inválido.");
+				}
+				catch (SaldoInsuficienteException)
+				{
+					Console.WriteLine("Saldo insuficiente: " + ayuda.Saldo);
 				}
 			}
-				ValidarSaldo(ayuda, extraccion);
-				saldoInf = true;
-				}
-			catch (SaldoInsuficienteException){
-				Console.WriteLine("Saldo insuficiente en cuenta {0} para realizar la operacion", ayuda.Numero);
-				Console.WriteLine("Saldo disponible: " + ayuda.Saldo);
-				Console.WriteLine("Intente nuevamente (si su saldo es 0, ingrese 0 al momento de realizar la extraccion)");
-				}
-			}
-		
-			if (c.ExisteCuenta(ayuda) == true){
-				ayuda.ExtraerSaldo(extraccion);
-				Console.WriteLine("Saldo restante: " + ayuda.Saldo);
-			}
+
+			ayuda.ExtraerSaldo(extraccion);
+			Console.WriteLine("Saldo restante: " + ayuda.Saldo);
 		}
-		
-		//Deposito en una cuenta
-		public static void DepositarStatic(Banco c){
+
+		//Deposito
+		public static void DepositarStatic(Banco c)
+		{
 			Cuenta ayuda = null;
 			bool NumeroValido = false;
-			bool NumeroValido2 = false;
+			bool MontoValido = false;
+			string num = null;
 			double deposito = 0;
-			string depositoayuda = "";
-			string num = null;
-			while (!NumeroValido){
-			try{
-			Console.WriteLine("Ingrese el numero de cuenta:");
-			num = Console.ReadLine();
-			ValidarExistencia(num, c);
-			NumeroValido = true;
-			}
-				catch(CuentaInexistenteException){		
-					Console.WriteLine("Se ingresó un numero de cuenta inexistente. Intente nuevamente");
+
+			while (!NumeroValido)
+			{
+				try
+				{
+					Console.WriteLine("Ingrese el numero de cuenta:");
+					num = Console.ReadLine();
+
+					if (num == null)
+						throw new CaracterInvalidoException();
+					
+					ValidarEntradaNumerica(num);
+					ValidarExistencia(num, c);
+					NumeroValido = true;
+				}
+				catch (CaracterInvalidoException)
+				{
+					Console.WriteLine("Formato inválido.");
+				}
+				catch (CuentaInexistenteException)
+				{
+					Console.WriteLine("Cuenta inexistente");
 				}
 			}
-			
-			while (!NumeroValido2){
-			try{
-			depositoayuda = Convert.ToString(deposito);
-			Console.WriteLine("Ingrese el saldo a depositar");
-			depositoayuda = Console.ReadLine();
-			ValidarEntradaNumerica(depositoayuda);
-			NumeroValido2 = true;
+
+			while (!MontoValido)
+			{
+				try
+				{
+					Console.WriteLine("Ingrese el monto a depositar:");
+					string aux = Console.ReadLine();
+
+					if (aux == null)
+						throw new CaracterInvalidoException();
+
+					ValidarEntradaNumerica(aux);
+					deposito = double.Parse(aux);
+					MontoValido = true;
+				}
+				catch (CaracterInvalidoException)
+				{
+					Console.WriteLine("Entrada inválida");
+				}
+				catch (FormatException)
+				{
+					Console.WriteLine("Número inválido");
+				}
 			}
-				catch(CaracterInvalidoException){
-					Console.WriteLine("Se ingresó una letra o un caracter invalido. Intente nuevamente");
-			}
-			}
-			foreach(Cuenta e in c.listaCuentas){
-				if (e.Numero == num){
+
+			foreach (Cuenta e in c.listaCuentas)
+			{
+				if (e.Numero == num)
+				{
 					ayuda = e;
 				}
 			}
-			
-			if (c.ExisteCuenta(ayuda) == true){	
-				ayuda.DepositarSaldo(deposito);
-				Console.WriteLine("Saldo actual: " + ayuda.Saldo);
-			}
+
+			ayuda.DepositarSaldo(deposito);
+			Console.WriteLine("Saldo actual: " + ayuda.Saldo);
 		}
-		
-		//Transferencia entre cuentas
-		public static void TransferirStatic(Banco c){
-			Cuenta ayuda = null;
-			Cuenta ayudados = null;
-			bool saldoInf = false;
-			bool NumeroValido = false;
+
+		//Transferencia
+		public static void TransferirStatic(Banco c)
+		{
+			Cuenta origen = null;
+			Cuenta destino = null;
+
+			bool NumeroValido1 = false;
 			bool NumeroValido2 = false;
 			bool Iguales = false;
-			double transferencia = 0;
-			string sumarnum = "";
-			string restarnum = "";
-			while(!Iguales){
-			try{
-			while (!NumeroValido){
-			try{
-			Console.WriteLine("Ingrese el numero de su cuenta:");
-			restarnum = Console.ReadLine();
-			ValidarEntradaNumerica(restarnum);
-			ValidarExistencia(restarnum, c);
-			NumeroValido = true;
-				}
-				catch(CaracterInvalidoException){
-					Console.WriteLine("Se ingresó una letra o un caracter invalido. Intente nuevamente");
-				}
-				catch(CuentaInexistenteException){
-					Console.WriteLine("El numero de cuenta ingresado no coincide con ninguna cuenta existente");
-				}
-			}
-			while (!NumeroValido2){
-			try{
-			Console.WriteLine("Ingrese el numero de la cuenta a transferir:");
-			sumarnum = Console.ReadLine();
-			ValidarEntradaNumerica(sumarnum);
-			ValidarExistencia(sumarnum, c);
-			NumeroValido2 = true;
-				}
-				catch(CaracterInvalidoException){
-					Console.WriteLine("Se ingresó una letra o un caracter invalido. Intente nuevamente");
-				}
-				catch(CuentaInexistenteException){
-					Console.WriteLine("El numero de cuenta ingresado no coincide con ninguna cuenta existente");
-				}
-			}
-				ValidarIgualdad(restarnum, sumarnum);
-				Iguales = true;
-			}
-			catch (NumerosDeCuentaIgualesExcepction){
-				Console.WriteLine("No se puede tranferir dinero a una misma cuenta. Intente nuevamente.");
-				NumeroValido = false;
-				NumeroValido2 = false;
-			}}
-			
-			while(!saldoInf){
-			try{
-			Console.WriteLine("Ingrese el saldo a transferir");
-			transferencia = double.Parse(Console.ReadLine());
-			foreach(Cuenta e in c.listaCuentas){
-				if (e.Numero == restarnum){
-					ayuda = e;
-				}
-			}
-			
-			foreach(Cuenta e in c.listaCuentas){
-				if (e.Numero == sumarnum){
-					ayudados = e;
-				}
-			}
-				ValidarSaldo(ayuda, transferencia);
-				saldoInf = true;
-				}
-				catch (SaldoInsuficienteException){
-				Console.WriteLine("Saldo insuficiente en cuenta {0} para realizar la operacion", ayuda.Numero);
-				Console.WriteLine("Saldo disponible: " + ayuda.Saldo);
-				Console.WriteLine("Intente nuevamente (si su saldo es 0, ingrese 0 al momento de realizar la transferencia)");
-			}
-			}
-			
+			bool saldoInf = false;
 
-			if (c.ExisteCuenta(ayuda) == true){
-				ayuda.ExtraerSaldo(transferencia);
-				Console.WriteLine("Saldo restante de la cuenta {0}: {1} ", ayuda.Numero, ayuda.Saldo);
+			string num1 = "";
+			string num2 = "";
+			double transferencia = 0;
+
+			while (!Iguales)
+			{
+				try
+				{
+					while (!NumeroValido1)
+					{
+						try
+						{
+							Console.WriteLine("Ingrese el número de su cuenta:");
+							num1 = Console.ReadLine();
+
+							if (num1 == null)
+								throw new CaracterInvalidoException();
+
+							ValidarEntradaNumerica(num1);
+							ValidarExistencia(num1, c);
+							NumeroValido1 = true;
+						}
+						catch (CaracterInvalidoException)
+						{
+							Console.WriteLine("Número inválido");
+						}
+						catch (CuentaInexistenteException)
+						{
+							Console.WriteLine("Cuenta inexistente");
+						}
+					}
+
+					while (!NumeroValido2)
+					{
+						try
+						{
+							Console.WriteLine("Ingrese el número de la cuenta destino:");
+							num2 = Console.ReadLine();
+
+							if (num2 == null)
+								throw new CaracterInvalidoException();
+
+							ValidarEntradaNumerica(num2);
+							ValidarExistencia(num2, c);
+							NumeroValido2 = true;
+						}
+						catch (CaracterInvalidoException)
+						{
+							Console.WriteLine("Número inválido");
+						}
+						catch (CuentaInexistenteException)
+						{
+							Console.WriteLine("Cuenta inexistente");
+						}
+					}
+
+					ValidarIgualdad(num1, num2);
+					Iguales = true;
+				}
+				catch (NumerosDeCuentaIgualesExcepction)
+				{
+					Console.WriteLine("No se puede transferir a la misma cuenta");
+					NumeroValido1 = false;
+					NumeroValido2 = false;
+				}
 			}
-			
-			if (c.ExisteCuenta(ayudados) == true){
-				ayudados.DepositarSaldo(transferencia);
-				Console.WriteLine("Saldo de la cuenta {0}: {1}", ayudados.Numero, ayudados.Saldo);
+
+			while (!saldoInf)
+			{
+				try
+				{
+					Console.WriteLine("Ingrese el monto a transferir:");
+					string aux = Console.ReadLine();
+
+					if (aux == null)
+						throw new CaracterInvalidoException();
+
+					transferencia = double.Parse(aux);
+
+					foreach (Cuenta e in c.listaCuentas)
+					{
+						if (e.Numero == num1)
+							origen = e;
+						if (e.Numero == num2)
+							destino = e;
+					}
+
+					ValidarSaldo(origen, transferencia);
+					saldoInf = true;
+				}
+				catch (CaracterInvalidoException)
+				{
+					Console.WriteLine("Entrada inválida");
+				}
+				catch (FormatException)
+				{
+					Console.WriteLine("Formato inválido");
+				}
+				catch (SaldoInsuficienteException)
+				{
+					Console.WriteLine("Saldo insuficiente: " + origen.Saldo);
+				}
 			}
-			
+
+			origen.ExtraerSaldo(transferencia);
+			destino.DepositarSaldo(transferencia);
+
+			Console.WriteLine("Saldo restante en origen: " + origen.Saldo);
+			Console.WriteLine("Saldo actual destino: " + destino.Saldo);
 		}
-		
-			public static void ValidarSaldo(Cuenta p, double transferencia){
-				if(transferencia > p.Saldo){
+
+		public static void ValidarSaldo(Cuenta p, double transferencia)
+		{
+			if (transferencia > p.Saldo)
+			{
 				throw new SaldoInsuficienteException();
-				}
 			}
-			
-			//Listado de Cuentas			
-			public static void ListadoCuentas(Banco c)
+		}
+
+		//Listado de Cuentas
+		public static void ListadoCuentas(Banco c)
+		{
+			if (c.CantidadCuentas() == 0)
 			{
-				if (c.CantidadCuentas() == 0)
-				{
-					Console.WriteLine("No hay cuentas registrados en el banco.");
-					return;
-				}
-				foreach (Cuenta p in c.listaCuentas)
-				{
-					p.MostrarDatosP();
-				}
+				Console.WriteLine("No hay cuentas registradas.");
+				return;
 			}
-			
-			//Listado de Clientes			
-			public static void ListadoClientes(Banco c)
+
+			foreach (Cuenta p in c.listaCuentas)
 			{
-				if (c.CantidadClientes() == 0)
-				{
-					Console.WriteLine("No hay clientes registrados en el banco.");
-					return;
-				}
-				foreach (Cliente d in c.listaClientes)
-				{
-					d.MostrarDatos();
-				}
+				p.MostrarDatosP();
 			}
-			
-			public static void ValidarEntradaNumerica(string entrada)
+		}
+
+		//Listado de Clientes
+		public static void ListadoClientes(Banco c)
+		{
+			if (c.CantidadClientes() == 0)
 			{
+				Console.WriteLine("No hay clientes registrados.");
+				return;
+			}
+
+			foreach (Cliente d in c.listaClientes)
+			{
+				d.MostrarDatos();
+			}
+		}
+
+		public static void ValidarEntradaNumerica(string entrada)
+		{
 			if (entrada == null || entrada == "")
 			{
 				throw new CaracterInvalidoException();
-			}	
-			foreach(char c in entrada)
+			}
+
+			foreach (char c in entrada)
 			{
 				if (c < '0' || c > '9')
-			{
-				throw new CaracterInvalidoException();
-			}	
+				{
+					throw new CaracterInvalidoException();
+				}
 			}
 		}
-			
-			public static void ValidarEntrada(string n){
-				if(n == null || n == ""){
-					throw new CaracterInvalidoException();
-				}
-				foreach (char c in n){
-  				  if (c >= '0' && c <= '9')
-    			    throw new CaracterInvalidoException();
-					}
-			}
-			public static void ValidarLetra(string n){
-				if(n == null || n == ""){
-					throw new CaracterInvalidoException();
-				}
-			foreach (char c in n){
-					if (!(c >= 'A' && c <= 'Z') || !(c >= 'a' && c <= 'z')){
-    			    throw new CaracterInvalidoException();
-				}
-			}
-			}
-			
-			public static void ValidarEmail(string email)
+
+		public static void ValidarEntrada(string n)
+		{
+			if (n == null || n == "")
 			{
-			bool arroba = false;
-			if (email == null){
-			throw new CaracterInvalidoException();
+				throw new CaracterInvalidoException();
 			}
-				
-			foreach (char c in email){
+			foreach (char c in n)
+			{
+				if (c >= '0' && c <= '9')
+					throw new CaracterInvalidoException();
+			}
+		}
+
+		public static void ValidarLetra(string n)
+		{
+			if (n == null || n == "")
+			{
+				throw new CaracterInvalidoException();
+			}
+			foreach (char c in n)
+			{
+				if (!((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')))
+				{
+					throw new CaracterInvalidoException();
+				}
+			}
+		}
+
+		public static void ValidarEmail(string email)
+		{
+			bool arroba = false;
+			if (email == null)
+			{
+				throw new CaracterInvalidoException();
+			}
+
+			foreach (char c in email)
+			{
 				if (c == '@')
-				{ 
-				arroba = true;
+				{
+					arroba = true;
 				}
 			}
 
 			if (!arroba)
 			{
-			throw new CaracterInvalidoException();
+				throw new CaracterInvalidoException();
 			}
-			}
-			
-			public static void ValidarExistencia(string n, Banco c){
+		}
+
+		public static void ValidarExistencia(string n, Banco c)
+		{
 			Cuenta ayuda = null;
-			foreach(Cuenta e in c.listaCuentas){
-				if (e.Numero == n){
+
+			foreach (Cuenta e in c.listaCuentas)
+			{
+				if (e.Numero == n)
+				{
 					ayuda = e;
 				}
 			}
-			
-			if (c.ExisteCuenta(ayuda) == false){
+
+			if (c.ExisteCuenta(ayuda) == false)
+			{
 				throw new CuentaInexistenteException();
 			}
-			}
-			
-			public static void ValidarIgualdad(string n, string f){
-				if (n == f){
-					throw new NumerosDeCuentaIgualesExcepction();
-				}
-			}
-			
-			public static void Main(string[] args)
-			{
-				string opcion;
-				//invocamos variables generales para cada uno. Asi cumpliendo la composicion.
-				Banco c = new Banco("Banco de los Programadores");
-				//Listado de clientes , indicando nro de cuenta, apellido, dni y saldo de cada una
-				Cliente d2 = new Cliente("Valentin","Molina","Av Italia","1127476774","gyokaro@gmail.com","11223344");
-				Cuenta p21 = new Cuenta("02","Molina","11223344",11600);
-				Cuenta p2 = new Cuenta("01","Molina","11223344",1600);
-				Cliente d3 = new Cliente("Evelyn","Santa Cruz","Calle EE UU","1133190322","simpsonita@gmail.com", "55667788");
-				Cuenta p3 = new Cuenta("11","Santa Cruz","55667788",40000);
-				Cuenta p31 = new Cuenta("12","Santa Cruz","55667788",96500);
-				Cliente d4 = new Cliente("Lautaro","Dufour","Av Serbia","1165172012","lautyduf@gmail.com","99001111");
-				Cuenta p4 = new Cuenta("21","Dufour","99001111",8900);
-				//agregamos los clientes con el metodo de Banco
-				c.AgregarCliente(d2);
-				c.AgregarCuenta(p2);
-				c.AgregarCuenta(p21);
-				c.AgregarCliente(d3);
-				c.AgregarCuenta(p3);
-				c.AgregarCuenta(p31);
-				c.AgregarCliente(d4);
-				c.AgregarCuenta(p4);
-				
-				do
-				{
-					Console.WriteLine("Bienvendio al "  + c.Nombre);
-					Console.WriteLine("\n¿Qué desea hacer?" + "\na) Agregar una Cuenta." + "\nb) Eliminar una Cuenta." + "\nc) Lista de Clientes con más de una Cuenta." + "\nd) Realizar una Extracción." + "\ne) Realizar un Deposito." + "\nf) Transferir dinero entre Cuentas." + "\ng) Listado de Cuentas." + "\nh) Listado de Clientes." + "\ni) Salir.");
-					opcion = Console.ReadLine().ToLower();
-					switch (opcion)
-					{
-						case "a":
-							Console.Clear();
-							Console.WriteLine("Ejecutando: Agregar una Cuenta.");
-							CuentaNueva(c);
-							break;
-						case "b":
-							Console.Clear();
-							Console.WriteLine("Ejecutando: Eliminar una Cuenta.");
-							EliminarCuenta(c);
-							break;
-						case "c":
-							Console.Clear();
-							Console.WriteLine("Ejecutando: Lista de Clientes con más de una Cuenta.");
-							ListarClientes(c);
-							break;
-						case "d":
-							Console.Clear();
-							Console.WriteLine("Ejecutando: Realizar una Extracción.");
-							ExtraerStatic(c);
-							break;
-						case "e":
-							Console.Clear();
-							Console.WriteLine("Ejecutando: Realizar un Deposito.");
-							DepositarStatic(c);
-							break;
-						case "f":
-							Console.Clear();
-							Console.WriteLine("Ejecutando: Transferir dinero entre Cuentas.");
-							TransferirStatic(c);
-							break;
-						case "g":
-							Console.Clear();
-							Console.WriteLine("Ejecutando: Listado de Cuentas.");
-							ListadoCuentas(c);
-							break;
-						case "h":
-							Console.Clear();
-							Console.WriteLine("Ejecutando: Listado de Clientes.");
-							ListadoClientes(c);
-							break;
-						case "i":
-							Console.Clear();
-							Console.WriteLine("---SALIENDO---");
-							Console.WriteLine("Presione cualquier tecla para continuar con el cierre del programa.");
-							Console.ReadKey();
-							break;
-						default:
-							Console.WriteLine("Eleccion Invalida. La entrada debe ser entre a-i");break;
-					}
-					
-					if (opcion != "i")
-					{
-						Console.WriteLine("\nPresione cualquier tecla para continuar...");
-						Console.ReadKey();
-						Console.Clear();
-					}
-				}
-				while(opcion != "i");
-				Console.WriteLine("\n\nMuchas Gracias por confiar en nuestro servicio.");
-				Console.WriteLine("\nPresione cualquier tecla para cerrar...");
-				Console.ReadKey();
-			}
-			
 		}
+
+		public static void ValidarIgualdad(string n, string f)
+		{
+			if (n == f)
+			{
+				throw new NumerosDeCuentaIgualesExcepction();
+			}
+		}
+
+		public static void Main(string[] args)
+		{
+			string opcion;
+			Banco c = new Banco("Banco de los Programadores");
+
+			Cliente d2 = new Cliente("Valentin", "Molina", "Av Italia", "1127476774", "gyokaro@gmail.com", "11223344");
+			Cuenta p21 = new Cuenta("02", "Molina", "11223344", 11600);
+			Cuenta p2 = new Cuenta("01", "Molina", "11223344", 1600);
+			Cliente d3 = new Cliente("Evelyn", "Santa Cruz", "Calle EE UU", "1133190322", "simpsonita@gmail.com", "55667788");
+			Cuenta p3 = new Cuenta("11", "Santa Cruz", "55667788", 40000);
+			Cuenta p31 = new Cuenta("12", "Santa Cruz", "55667788", 96500);
+			Cliente d4 = new Cliente("Lautaro", "Dufour", "Av Serbia", "1165172012", "lautyduf@gmail.com", "99001111");
+			Cuenta p4 = new Cuenta("21", "Dufour", "99001111", 8900);
+
+			c.AgregarCliente(d2);
+			c.AgregarCuenta(p2);
+			c.AgregarCuenta(p21);
+			c.AgregarCliente(d3);
+			c.AgregarCuenta(p3);
+			c.AgregarCuenta(p31);
+			c.AgregarCliente(d4);
+			c.AgregarCuenta(p4);
+
+			do
+			{
+				Console.WriteLine("Bienvendio al " + c.Nombre);
+				Console.WriteLine("\n¿Qué desea hacer?" +
+				                  "\na) Agregar una Cuenta." +
+				                  "\nb) Eliminar una Cuenta." +
+				                  "\nc) Lista de Clientes con más de una Cuenta." +
+				                  "\nd) Realizar una Extracción." +
+				                  "\ne) Realizar un Deposito." +
+				                  "\nf) Transferir dinero entre Cuentas." +
+				                  "\ng) Listado de Cuentas." +
+				                  "\nh) Listado de Clientes." +
+				                  "\ni) Salir.");
+
+				opcion = Console.ReadLine().ToLower();
+
+				switch (opcion)
+				{
+					case "a":
+						Console.Clear();
+						Console.WriteLine("Ejecutando: Agregar una Cuenta.");
+						CuentaNueva(c);
+						break;
+					case "b":
+						Console.Clear();
+						Console.WriteLine("Ejecutando: Eliminar una Cuenta.");
+						EliminarCuenta(c);
+						break;
+					case "c":
+						Console.Clear();
+						Console.WriteLine("Ejecutando: Lista de Clientes con más de una Cuenta.");
+						ListarClientes(c);
+						break;
+					case "d":
+						Console.Clear();
+						Console.WriteLine("Ejecutando: Realizar una Extracción.");
+						ExtraerStatic(c);
+						break;
+					case "e":
+						Console.Clear();
+						Console.WriteLine("Ejecutando: Realizar un Deposito.");
+						DepositarStatic(c);
+						break;
+					case "f":
+						Console.Clear();
+						Console.WriteLine("Ejecutando: Transferir dinero entre Cuentas.");
+						TransferirStatic(c);
+						break;
+					case "g":
+						Console.Clear();
+						Console.WriteLine("Ejecutando: Listado de Cuentas.");
+						ListadoCuentas(c);
+						break;
+					case "h":
+						Console.Clear();
+						Console.WriteLine("Ejecutando: Listado de Clientes.");
+						ListadoClientes(c);
+						break;
+					case "i":
+						Console.Clear();
+						Console.WriteLine("---SALIENDO---");
+						Console.WriteLine("Presione cualquier tecla para continuar...");
+						Console.ReadKey();
+						break;
+					default:
+						Console.WriteLine("Elección inválida.");
+						break;
+				}
+
+				if (opcion != "i")
+				{
+					Console.WriteLine("\nPresione cualquier tecla para continuar...");
+					Console.ReadKey();
+					Console.Clear();
+				}
+
+			}
+			while (opcion != "i");
+
+			Console.WriteLine("\nMuchas Gracias por usar el sistema.");
+			Console.WriteLine("Presione cualquier tecla para cerrar...");
+			Console.ReadKey();
+		}
+
 	}
+}
