@@ -1,0 +1,22 @@
+/*
+ * Created by SharpDevelop.
+ * User: Nitro
+ * Date: 16/11/2025
+ * Time: 19:44
+ * 
+ * To change this template use Tools | Options | Coding | Edit Standard Headers.
+ */
+using System;
+
+namespace Proyecto_POO
+{
+	/// <summary>
+	/// Description of CaracterInvalidoException.
+	/// </summary>
+	public class CaracterInvalidoException : Exception
+	{
+		public CaracterInvalidoException()
+		{
+		}
+	}
+}
