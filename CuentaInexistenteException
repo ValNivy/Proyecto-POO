@@ -1,0 +1,22 @@
+/*
+ * Created by SharpDevelop.
+ * User: Nitro
+ * Date: 16/11/2025
+ * Time: 19:45
+ * 
+ * To change this template use Tools | Options | Coding | Edit Standard Headers.
+ */
+using System;
+
+namespace Proyecto_POO
+{
+	/// <summary>
+	/// Description of CuentaInexistenteException.
+	/// </summary>
+	public class CuentaInexistenteException : Exception
+	{
+		public CuentaInexistenteException()
+		{
+		}
+	}
+}
