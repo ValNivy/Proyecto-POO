@@ -327,7 +327,9 @@ namespace Proyecto_POO
 					ayuda = e; 
 				}
 			}
-			
+
+			deposito = double.Parse(depositoayuda);//se convierte la cadena en double
+
 			if (c.ExisteCuenta(ayuda) == true){
 				ayuda.DepositarSaldo(deposito); // Llama al método para depositar.
 				Console.WriteLine("Saldo actual: " + ayuda.Saldo); // Muestra el saldo actual.
@@ -488,8 +490,8 @@ namespace Proyecto_POO
 					throw new CaracterInvalidoException(); // Lanza excepción si n es null o vacío.
 				}
 			foreach (char c in n){
-				if (!(c >= 'A' && c <= 'Z') || !(c >= 'a' && c <= 'z')){
-		    		throw new CaracterInvalidoException(); // Intenta asegurar que sean letras, pero la condición lógica es incorrecta.
+				if (!((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))){
+		    		throw new CaracterInvalidoException(); // Lanza excepción si no se encuentra una letra en la cadena.
 				}
 			}
 			}
@@ -536,10 +538,9 @@ namespace Proyecto_POO
 			public static void Main(string[] args)
 			{
 				string opcion; // Variable para la opción del menú.
-				//invocamos variables generales para cada uno. Asi cumpliendo la composicion.
 				Banco c = new Banco("Banco de los Programadores"); // Crea instancia del banco con nombre.
-				//Listado de clientes , indicando nro de cuenta, apellido, dni y saldo de cada una
-				Cliente d2 = new Cliente("Valentin","Molina","Av Italia","1127476774","gyokaro@gmail.com","11223344"); // Crea cliente ejemplo.
+				
+				/*Cliente d2 = new Cliente("Valentin","Molina","Av Italia","1127476774","gyokaro@gmail.com","11223344"); // Crea cliente ejemplo.
 				Cuenta p21 = new Cuenta("02","Molina","11223344",11600); // Crea cuenta ejemplo.
 				Cuenta p2 = new Cuenta("01","Molina","11223344",1600); // Otra cuenta ejemplo.
 				Cliente d3 = new Cliente("Evelyn","Santa Cruz","Calle EE UU","1133190322","simpsonita@gmail.com", "55667788");
@@ -547,7 +548,7 @@ namespace Proyecto_POO
 				Cuenta p31 = new Cuenta("12","Santa Cruz","55667788",96500);
 				Cliente d4 = new Cliente("Lautaro","Dufour","Av Serbia","1165172012","lautyduf@gmail.com","99001111");
 				Cuenta p4 = new Cuenta("21","Dufour","99001111",8900);
-				//agregamos los clientes con el metodo de Banco
+
 				c.AgregarCliente(d2); // Agrega cliente d2 al banco.
 				c.AgregarCuenta(p2); // Agrega cuentas y clientes prefijados al banco para pruebas.
 				c.AgregarCuenta(p21);
@@ -555,7 +556,7 @@ namespace Proyecto_POO
 				c.AgregarCuenta(p3);
 				c.AgregarCuenta(p31);
 				c.AgregarCliente(d4);
-				c.AgregarCuenta(p4);
+				c.AgregarCuenta(p4);*/
 				
 				do
 				{
