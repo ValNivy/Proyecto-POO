@@ -194,7 +194,7 @@ namespace Proyecto_POO
 				}
 				if(repuesto != null && ayuda == repuesto.Dni){
 					EliminarCliente(c, repuesto.Dni); // Si no tiene más cuentas, elimina también al cliente.
-					Console.WriteLine("Cliente eliminado");
+					Console.WriteLine("Cliente de DNI: {0} eliminado", repuesto.Dni);
 				}
 			}
 		}
