@@ -13,6 +13,7 @@ namespace Proyecto_POO
 			bool DniNoEncontrado = true; // Asume inicialmente que el DNI no está en la lista de clientes.
 			bool ApellidoValido = false; // Variable de validación del apellido.
 			bool DniValido = false; // Variable de validación del DNI.
+			bool SaldoValido = false; //Variable de validacion del saldo.
 			Cuenta p = new Cuenta("","","", 0); // Se crea una instancia vacía de Cuenta para rellenarla.
 			while (!EsNumero){
 			try{
@@ -48,7 +49,7 @@ namespace Proyecto_POO
 			try{
 			Console.WriteLine("Ingrese su DNI:"); // Pide el DNI.
 			p.Dni = Console.ReadLine(); // Lee y asigna el DNI.
-			ValidarLetra(p.Dni); // Valida que la entrada contenga solo letras? (ver implementación más abajo).
+			ValidarEntradaNumerica(p.Dni); // Valida que la entrada contenga solo letras? (ver implementación más abajo).
 			DniValido = true; // Si no hay excepción, marca como válido.
 			}
 			catch (CaracterInvalidoException){
@@ -66,9 +67,17 @@ namespace Proyecto_POO
 				Console.WriteLine("No existe en el sistema, debe agregarse como cliente nuevo\n"); // Indica que debe crearse un cliente.
 				NuevoCliente(c, p.Dni, p.Apellido); // Llama al método para crear un cliente nuevo con dni y apellido.
 			}
-			
+			while(!SaldoValido){
+				try{
 			Console.WriteLine("Ingrese su saldo"); // Pide el saldo inicial de la cuenta.
-			p.Saldo = double.Parse(Console.ReadLine()); // Lee y parsea el saldo ingresado (sin validar formato aquí).
+			p.Saldo = double.Parse(Console.ReadLine()); // Lee el saldo ingresado.
+			SaldoPositivo(p.Saldo);//Validamos si el saldo es positivo.
+			SaldoValido = true;
+				}
+				catch(SaldoNegativoException){
+					Console.WriteLine("Error, ingrese un valor valido");
+				}
+			}
 			c.AgregarCuenta(p); // Agrega la cuenta al banco.
 			Console.WriteLine("¡Cuenta agregada con exito!"); // Mensaje de éxito.
 		}
@@ -118,7 +127,7 @@ namespace Proyecto_POO
 			try{
 			Console.WriteLine("Ingrese su telefono:"); // Pide teléfono.
 			d.Telefono = Console.ReadLine(); // Lee y asigna teléfono.
-			ValidarLetra(d.Telefono); // Valida usando ValidarLetra (nota: implementación puede ser incorrecta para números).
+			ValidarEntradaNumerica(d.Telefono); // Valida usando ValidarLetra (nota: implementación puede ser incorrecta para números).
 			TelefonoValido = true; // Marca teléfono como válido si no lanza excepción.
 				}
 			catch (CaracterInvalidoException){
@@ -183,8 +192,9 @@ namespace Proyecto_POO
 						repuesto = m; // Busca al cliente que corresponde al DNI guardado.
 					}
 				}
-				if(ayuda == repuesto.Dni){
+				if(repuesto != null && ayuda == repuesto.Dni){
 					EliminarCliente(c); // Si no tiene más cuentas, elimina también al cliente.
+					Console.WriteLine("Cliente eliminado");
 				}
 			}
 		}
@@ -432,6 +442,12 @@ namespace Proyecto_POO
 				throw new SaldoInsuficienteException(); // Lanza excepción si se intenta extraer más del saldo.
 				}
 			}
+		
+		public static void SaldoPositivo(double saldo){
+			if(saldo < 0){
+				throw new SaldoNegativoException();//Comprobamos si el saldo es positivo, y si lo es, lanza una excepcion.
+			}
+		}
 			
 			//Listado de Cuentas			
 			public static void ListadoCuentas(Banco c)
