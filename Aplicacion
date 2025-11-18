@@ -514,7 +514,7 @@ namespace Proyecto_POO
 			
 			public static void ValidarEmail(string email)
 			{
-				bool arroba = false; // Bandera para detectar la presencia de '@'.
+				bool arroba = false; // Variable para detectar la presencia de @.
 				if (email == null){
 				throw new CaracterInvalidoException(); // Lanza si email es null.
 				}
@@ -522,13 +522,13 @@ namespace Proyecto_POO
 				foreach (char c in email){
 					if (c == '@')
 					{ 
-					arroba = true; // Si encuentra '@', marca como verdadero.
+					arroba = true; // Si encuentra @, marca como verdadero.
 					}
 				}
 
 				if (!arroba)
 				{
-				throw new CaracterInvalidoException(); // Lanza excepción si no encontró '@'.
+				throw new CaracterInvalidoException(); // Lanza excepción si no encontró @.
 				}
 			}
 			
